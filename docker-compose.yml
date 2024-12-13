@@ -1,6 +1,28 @@
 services:
   scraper:
-    build: .
+    build:
+      context: .
+    container_name: scraper
+    command: scrapy crawl city_hotels
     volumes:
       - .:/app
-    command: scrapy crawl city_hotels
+    depends_on:
+      - postgres
+    environment:
+      - DATABASE_URL=postgresql://user:password@postgres:5432/hotels_db
+    working_dir: /app
+
+  postgres:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hotels_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

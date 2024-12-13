@@ -1,6 +1,6 @@
 FROM python:3.9-slim
 
-# Install dependencies
+# Install system-level dependencies for PostgreSQL and Python
 RUN apt-get update && apt-get install -y \
     gcc \
     libpq-dev \
@@ -13,7 +13,8 @@ WORKDIR /app
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy Scrapy project
+# Copy Scrapy project and other necessary files
 COPY . .
 
-CMD ["scrapy", "crawl", "city_hotels"]
+# Run the database initialization script before starting the Scrapy spider
+ENTRYPOINT ["sh", "-c", "python initialize_db.py && scrapy crawl city_hotels"]
