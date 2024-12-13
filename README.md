@@ -1,0 +1,1 @@
+window.IBU_HOTEL.initData.htlsData

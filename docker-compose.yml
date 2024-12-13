@@ -1,0 +1,6 @@
+services:
+  scraper:
+    build: .
+    volumes:
+      - .:/app
+    command: scrapy crawl city_hotels

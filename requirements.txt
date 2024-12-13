@@ -1,0 +1,4 @@
+scrapy
+psycopg2-binary
+sqlalchemy
+scrapy-user-agents
