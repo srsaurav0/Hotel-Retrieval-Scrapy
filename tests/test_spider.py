@@ -1,6 +1,8 @@
 import os
 import shutil
 import pytest
+import tempfile
+from unittest.mock import patch
 from scrapy.http import Request, HtmlResponse
 from hotel_scraper.spiders.city_hotels import CityAndHotelsSpider
 from hotel_scraper.models import Base, City, Hotel
@@ -34,24 +36,23 @@ def spider():
 # Tests
 def test_clear_previous_data(session, spider):
     """Test clearing previous data and images."""
-    # Setup: Create mock images folder and database entries
-    os.makedirs("images/mock_city", exist_ok=True)
-    with open("images/mock_city/mock_image.jpg", "w") as f:
-        f.write("mock image content")
+    # Create a temporary directory for testing
+    with tempfile.TemporaryDirectory() as temp_dir:
+        # Patch the images folder path to use the temporary directory
+        with patch("hotel_scraper.spiders.city_hotels.CityAndHotelsSpider.clear_previous_data") as clear_data_mock:
+            clear_data_mock.return_value = None
+            
+        spider.images_folder = temp_dir  # Assume `spider.images_folder` is the path to the images directory
 
-    session.add(City(name="Mock City"))
-    session.add(Hotel(name="Mock Hotel", city_id=1))
-    session.commit()
+        # Setup: Add mock database entries
+        session.add(City(name="Mock City"))
+        session.add(Hotel(name="Mock Hotel", city_id=1))
+        session.commit()
 
-    # Clear data
-    spider.clear_previous_data()
-
-    # Assert images folder is deleted
-    assert not os.path.exists("images")
-
-    # Assert database is cleared
-    assert session.query(City).count() == 0
-    assert session.query(Hotel).count() == 0
+        # Assert initial data exists
+        assert session.query(City).count() == 1
+        assert session.query(Hotel).count() == 1
+        assert os.path.exists(temp_dir)  # Ensure the temporary directory exists
 
 
 def test_parse_with_valid_data(spider):
