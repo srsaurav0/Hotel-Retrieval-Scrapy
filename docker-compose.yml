@@ -3,7 +3,6 @@ services:
     build:
       context: .
     container_name: scraper
-    command: scrapy crawl city_hotels
     volumes:
       - .:/app
     depends_on:

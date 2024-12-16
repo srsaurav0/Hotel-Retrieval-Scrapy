@@ -17,4 +17,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY . .
 
 # Run the database initialization script before starting the Scrapy spider
-ENTRYPOINT ["sh", "-c", "python initialize_db.py && scrapy crawl city_hotels"]
+CMD ["sh", "-c", "python initialize_db.py && scrapy crawl city_hotels && sleep infinity"]
+# CMD ["sh", "-c", "python initialize_db.py && pytest --cov=hotel_scraper"]

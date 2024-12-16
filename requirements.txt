@@ -2,3 +2,6 @@ scrapy
 psycopg2-binary
 sqlalchemy
 scrapy-user-agents
+pytest
+pytest-cov
+pytest-mock
