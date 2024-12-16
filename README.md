@@ -5,10 +5,12 @@
 - [Features](#features)
 - [Prerequisites](#prerequisites)
 - [Setup and Installation](#setup-and-installation)
-- [Installation](#installation)
 - [Project Structure](#project-structure)
+- [Accessing the Database](#accessing-the-database)
+- [Database Schema](#database-schema)
+- [Image Storage](#image-storage)
 - [Testing](#testing)
-- [Partitioning](#testing)
+
 
 
 ---
@@ -151,7 +153,7 @@ This project scrapes hotel data from the [Trip.com](https://uk.trip.com/hotels/?
 ---
 
 
-## Running Tests
+## Testing
 
 1. Enter into scraper container:
    ```bash
