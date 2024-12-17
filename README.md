@@ -12,7 +12,6 @@
 - [Testing](#testing)
 
 
-
 ---
 
 
@@ -88,21 +87,20 @@ This project scrapes hotel data from the [Trip.com](https://uk.trip.com/hotels/?
 │   ├── spiders
 │   │   ├── city_hotels.py       # Scrapy spider to scrape data
 │   ├── database.py              # SQLAlchemy database setup
-│   ├── check_tables.py          # SQLAlchemy models for City and Hotel
 │   ├── items.py                 # Items for City and Hotel
 │   ├── middlewares.py           # Middlewares
 │   ├── models.py                # SQLAlchemy models for City and Hotel
 │   ├── pipelines.py             # Pipelines
-│   ├── settings.py              # Settings
+│   └──  settings.py              # Settings
 ├── tests
 │   ├── test_spider.py           # Unit tests for the scraper
 │   ├── test_database.py         # Unit tests for database models
-│   ├── test_middleware.py       # Unit tests for middleware
+│   └── test_middleware.py       # Unit tests for middleware
 ├── Dockerfile                   # Dockerfile for scraper
 ├── docker-compose.yml           # Docker Compose configuration
 ├── initialize_db.py             # File to initialize database
 ├── requirements.txt             # Python dependencies
-├── README.md                    # Project documentation
+└──  README.md                    # Project documentation
 ```
 
 
