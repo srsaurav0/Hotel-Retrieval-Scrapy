@@ -52,7 +52,20 @@ This project scrapes hotel data from the [Trip.com](https://uk.trip.com/hotels/?
    cd Hotel-Retrieval-Scrapy
    ```
 
-2. Build and start the containers:
+2. Create and activate a virtual environment:
+   On Linux:
+   ```bash
+    python3 -m venv .venv
+    source .venv/bin/activate
+   ```
+   On Windows:
+   ```bash
+    python -m venv .venv
+    Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+    .venv\Scripts\activate
+   ```
+
+3. Build and start the containers:
    ```bash
    docker-compose up --build
    ```

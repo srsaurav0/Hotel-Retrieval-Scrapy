@@ -5,6 +5,7 @@ import random
 import os
 import requests
 import shutil
+from hotel_scraper.models import Base
 from hotel_scraper.database import SessionLocal
 from hotel_scraper.models import City, Hotel
 
@@ -15,6 +16,10 @@ class CityAndHotelsSpider(scrapy.Spider):
 
     def clear_previous_data(self):
         """Clear previous data and images."""
+        # Ensure database tables are created
+        from hotel_scraper.database import engine
+        Base.metadata.create_all(bind=engine)  # Create tables if they don't exist
+
         # Clear images folder
         folder_path = "images"
         if os.path.exists(folder_path):
@@ -23,11 +28,16 @@ class CityAndHotelsSpider(scrapy.Spider):
 
         # Clear database tables
         session = SessionLocal()
-        session.query(Hotel).delete()
-        session.query(City).delete()
-        session.commit()
-        session.close()
-        self.log("Previous data and images cleared.")
+        try:
+            session.query(Hotel).delete()
+            session.query(City).delete()
+            session.commit()
+            self.log("Previous data and images cleared.")
+        except Exception as e:
+            self.log(f"Error while clearing database: {e}")
+            session.rollback()
+        finally:
+            session.close()
 
     def parse(self, response):
         # Clear previous data and images
