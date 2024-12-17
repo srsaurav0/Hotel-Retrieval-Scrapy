@@ -18,4 +18,3 @@ COPY . .
 
 # Run the database initialization script before starting the Scrapy spider
 CMD ["sh", "-c", "python initialize_db.py && scrapy crawl city_hotels && sleep infinity"]
-# CMD ["sh", "-c", "python initialize_db.py && pytest --cov=hotel_scraper"]
