@@ -13,6 +13,7 @@ class Hotel(Base):
     __tablename__ = 'hotels'
 
     id = Column(Integer, primary_key=True, index=True)
+    property_id = Column(Integer)
     name = Column(String, index=True)
     rating = Column(Float)
     location = Column(String)
@@ -22,5 +23,5 @@ class Hotel(Base):
     price = Column(Float)
     image_path = Column(String)  # Path to the saved image
     city_id = Column(Integer, ForeignKey('cities.id'))
-
+    city_name = Column(String)
     city = relationship("City", back_populates="hotels")

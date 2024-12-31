@@ -127,6 +127,7 @@ class CityAndHotelsSpider(scrapy.Spider):
                     # Add hotel data to the database
                     hotel_obj = Hotel(
                         name=hotel_data["property_title"],
+                        property_id=hotel_data["property_id"],
                         rating=float(hotel_data["rating"]) if hotel_data["rating"] not in ["N/A", "", None] else None,
                         location=hotel_data["location"],
                         latitude=float(hotel_data["latitude"]) if hotel_data["latitude"] != "N/A" else None,
@@ -135,6 +136,7 @@ class CityAndHotelsSpider(scrapy.Spider):
                         price=float(hotel_data["price"]) if hotel_data["price"] not in ["N/A", "", None] else None,
                         image_path=image_path,
                         city_id=city.id,
+                        city_name=hotel_data["city_name"],
                     )
                     session.add(hotel_obj)
 
@@ -158,6 +160,7 @@ class CityAndHotelsSpider(scrapy.Spider):
         roomInfo = hotel.get("roomInfo", {})
         return {
             "property_title": hotel_basic_info.get("hotelName", "N/A"),
+            "property_id": hotel_basic_info.get("hotelId", "N/A"),
             "rating": commentInfo.get("commentScore", "N/A"),
             "location": positionInfo.get("positionName", "N/A"),
             "latitude": positionInfo.get("coordinate", {}).get("lat", "N/A"),
@@ -165,6 +168,7 @@ class CityAndHotelsSpider(scrapy.Spider):
             "room_type": roomInfo.get("physicalRoomName", "N/A"),
             "price": hotel_basic_info.get("price", "N/A"),
             "image_url": hotel_basic_info.get("hotelImg", "N/A"),
+            "city_name": positionInfo.get("cityName", "N/A"),
         }
 
     def download_image(self, image_url, city_name, hotel_name):
