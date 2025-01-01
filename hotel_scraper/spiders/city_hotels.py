@@ -116,7 +116,7 @@ class CityAndHotelsSpider(scrapy.Spider):
                     session.add(city)
                     session.commit()
 
-                for hotel in hotel_list[:10]:  # Limit to 10 hotels per city
+                for hotel in hotel_list[:5]:  # Limit to 5 hotels per city
                     hotel_data = self.extract_hotel_data(hotel)
 
                     # Download and save the image
